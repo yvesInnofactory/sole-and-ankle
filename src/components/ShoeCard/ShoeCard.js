@@ -1,19 +1,11 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from "react";
+import styled from "styled-components/macro";
 
-import { COLORS, WEIGHTS } from '../../constants';
-import { formatPrice, pluralize, isNewShoe } from '../../utils';
-import Spacer from '../Spacer';
+import { COLORS, WEIGHTS } from "../../constants";
+import { formatPrice, pluralize, isNewShoe } from "../../utils";
+import Spacer from "../Spacer";
 
-const ShoeCard = ({
-  slug,
-  name,
-  imageSrc,
-  price,
-  salePrice,
-  releaseDate,
-  numOfColors,
-}) => {
+const ShoeCard = ({ slug, name, imageSrc, price, salePrice, releaseDate, numOfColors }) => {
   // There are 3 variants possible, based on the props:
   //   - new-release
   //   - on-sale
@@ -35,6 +27,8 @@ const ShoeCard = ({
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
+          {variant === "on-sale" && <Flag fill="#ae0a0a">SALE</Flag>}
+          {variant === "new-release" && <Flag fill="#bf1eb4">Just released!</Flag>}
           <Image alt="" src={imageSrc} />
         </ImageWrapper>
         <Spacer size={12} />
@@ -43,7 +37,7 @@ const ShoeCard = ({
           <Price>{formatPrice(price)}</Price>
         </Row>
         <Row>
-          <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          <ColorInfo>{pluralize("Color", numOfColors)}</ColorInfo>
         </Row>
       </Wrapper>
     </Link>
@@ -53,6 +47,7 @@ const ShoeCard = ({
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
+  flex-basis: 400px;
 `;
 
 const Wrapper = styled.article``;
@@ -61,7 +56,18 @@ const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img``;
+const Flag = styled.div`
+  position: absolute;
+  top: 10px;
+  right: -5px;
+  border-radius: 2px;
+  background-color: ${(p) => p.fill};
+  padding: 5px;
+`;
+
+const Image = styled.img`
+  width: 100%;
+`;
 
 const Row = styled.div`
   font-size: 1rem;
